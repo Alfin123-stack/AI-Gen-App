@@ -7,6 +7,7 @@ import FormHeader from "./FormHeader";
 import FormFields from "./FormFields";
 import SignUpModal from "@/components/ui/SignUpModal";
 import { useTemplate } from "@/app/_hooks/useTemplate";
+import { Template } from "@/app/_utils/template";
 
 export interface TemplateInfo {
   name: string;
@@ -24,33 +25,6 @@ export interface TemplateInfo {
   }[];
 }
 
-export interface Template {
-  name: {
-    en: string;
-    id: string;
-  };
-  desc: {
-    en: string;
-    id: string;
-  };
-  category: string;
-  icon: string;
-  aiPrompt: string;
-  slug: string;
-  form: {
-    label: {
-      en: string;
-      id: string;
-    };
-    field: string;
-    name: string;
-    required: boolean;
-    placeholder: {
-      en: string;
-      id: string;
-    };
-  }[];
-}
 const ResponseEditor = dynamic(() => import("./ResponseEditor"), {
   ssr: false,
 });

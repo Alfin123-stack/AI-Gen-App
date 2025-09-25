@@ -11,10 +11,8 @@ import { Editor } from "@toast-ui/react-editor";
 import { saveQuery } from "@/app/_services/mongoService";
 import { generateText } from "@/app/_services/aiService";
 import { useLanguage } from "../_contexts/LanguageContext";
-import {
-  Template,
-  TemplateInfo,
-} from "../dashboard/template/[slug]/_components/FormTemplate";
+import { TemplateInfo } from "../dashboard/template/[slug]/_components/FormTemplate";
+import { Template } from "../_utils/template";
 
 export type Language = "en" | "id";
 
@@ -34,7 +32,7 @@ export interface MultiLangTemplate {
   }[];
 }
 
-export function useTemplate(template: Template & MultiLangTemplate) {
+export function useTemplate(template: Template) {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<string>("");

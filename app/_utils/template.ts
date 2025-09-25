@@ -2,38 +2,20 @@
 import { Language } from "@/app/_contexts/LanguageContext";
 
 export interface FormField {
-  label: {
-    en: string;
-    id: string;
-  };
+  label: Record<Language, string>;
   field: "input" | "textarea";
   name: string;
   required: boolean;
-  placeholder?: {
-    en: string;
-    id: string;
-  };
+  placeholder?: Record<Language, string>;
 }
 
 export interface Template {
-  name: {
-    en: string;
-    id: string;
-  };
-  desc: {
-    en: string;
-    id: string;
-  };
-  category: {
-    en: string;
-    id: string;
-  };
+  name: Record<Language, string>;
+  desc: Record<Language, string>;
+  category: Record<Language, string>;
   icon: string;
   slug: string;
-  aiPrompt: {
-    en: string;
-    id: string;
-  };
+  aiPrompt: Record<Language, string>;
   form: FormField[];
 }
 
