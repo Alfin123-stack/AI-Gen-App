@@ -84,6 +84,6 @@ Make sure you have installed:
 
 ### 📥 Installation
 ```bash
-git clone https://github.com/username/ai-gen-app.git
+git clone https://github.com/Alfin123-stack/ai-gen-app.git
 cd ai-gen-app
 npm install
