@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/app/_contexts/LanguageContext";
+import { Translations } from "./GenAI";
 
 interface InputCardProps {
   input: string;
@@ -16,7 +17,7 @@ interface InputCardProps {
   isLoading: boolean;
   onSubmit: (e: React.FormEvent) => void;
   onClear: () => void;
-  t: any;
+  t: Translations;
   hasResponse: boolean;
 }
 

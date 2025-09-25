@@ -3,23 +3,7 @@
 import Image from "next/image";
 import { ChangeEvent, FormEvent } from "react";
 import { Loader2Icon } from "lucide-react";
-import { TemplateInfo } from "../page";
-
-type Field = {
-  label: string;
-  name: string;
-  field: "input" | "textarea";
-  required?: boolean;
-};
-
-interface Template {
-  slug: string;
-  name: string;
-  icon: string;
-  desc: string;
-  form: Field[];
-  aiPrompt: string;
-}
+import { TemplateInfo } from "./FormTemplate";
 
 interface FormFieldsProps {
   template: TemplateInfo;

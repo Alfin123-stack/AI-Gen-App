@@ -6,10 +6,9 @@ import Prism from "prismjs";
 import { RefObject } from "react";
 import { useLanguage } from "@/app/_contexts/LanguageContext";
 
-import "@toast-ui/editor/dist/toastui-editor.css"; // ✅ core style
-import "@toast-ui/editor/dist/theme/toastui-editor-dark.css"; // ✅ dark theme
-import "prismjs/themes/prism.css"; // ✅ syntax highlight style
-
+import "@toast-ui/editor/dist/toastui-editor.css";
+import "@toast-ui/editor/dist/theme/toastui-editor-dark.css"; 
+import "prismjs/themes/prism.css"; 
 interface ResponseEditorProps {
   editorRef: RefObject<Editor | null>;
   theme: string;

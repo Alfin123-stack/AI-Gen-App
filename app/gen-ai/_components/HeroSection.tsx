@@ -1,9 +1,10 @@
 "use client";
 
 import { useLanguage } from "@/app/_contexts/LanguageContext";
+import { Translations } from "./GenAI";
 
 interface HeroSectionProps {
-  t: any;
+  t: Translations;
 }
 
 export default function HeroSection({ t }: HeroSectionProps) {

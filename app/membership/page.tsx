@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Membership from "./_components/Membership";
 
-// ✅ Metadata bilingual (EN & ID)
 export const metadata: Metadata = {
   title: "Membership Plans | AI Content Generator",
   description:

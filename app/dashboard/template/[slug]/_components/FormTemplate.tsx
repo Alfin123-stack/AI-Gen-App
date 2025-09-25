@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import dynamic from "next/dynamic";
@@ -8,7 +7,6 @@ import FormHeader from "./FormHeader";
 import FormFields from "./FormFields";
 import SignUpModal from "@/components/ui/SignUpModal";
 import { useTemplate } from "@/app/_hooks/useTemplate";
-import { useLanguage } from "@/app/_contexts/LanguageContext";
 
 export interface TemplateInfo {
   name: string;
@@ -26,11 +24,38 @@ export interface TemplateInfo {
   }[];
 }
 
+export interface Template {
+  name: {
+    en: string;
+    id: string;
+  };
+  desc: {
+    en: string;
+    id: string;
+  };
+  category: string;
+  icon: string;
+  aiPrompt: string;
+  slug: string;
+  form: {
+    label: {
+      en: string;
+      id: string;
+    };
+    field: string;
+    name: string;
+    required: boolean;
+    placeholder: {
+      en: string;
+      id: string;
+    };
+  }[];
+}
 const ResponseEditor = dynamic(() => import("./ResponseEditor"), {
   ssr: false,
 });
 
-export default function FormTemplate({ template }: { template: TemplateInfo }) {
+export default function FormTemplate({ template }: { template: Template }) {
   const {
     formData,
     loading,

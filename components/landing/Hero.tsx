@@ -5,9 +5,10 @@ import { SignInButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Translation } from "@/app/page";
 
 interface Props {
-  t: any;
+  t: Translation;
 }
 
 export default function Hero({ t }: Props) {

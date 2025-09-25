@@ -47,6 +47,9 @@ const translations = {
       "Coba generator AI kami secara gratis atau daftar sekarang untuk membuka fitur premium.",
   },
 };
+
+export type Translation = (typeof translations)["en"];
+
 export default function LandingPage() {
   const { language } = useLanguage();
   const t = translations[language];

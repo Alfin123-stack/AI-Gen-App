@@ -1,15 +1,16 @@
 import Query from "@/app/_models/query";
 import db from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await db();
 
-    const query = await Query.findById(params.id);
+    const { id } = await params; // ✅ karena params dianggap Promise
+    const query = await Query.findById(id);
 
     if (!query) {
       return NextResponse.json(

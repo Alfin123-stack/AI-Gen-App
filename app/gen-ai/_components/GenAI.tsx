@@ -3,39 +3,43 @@
 import { useState } from "react";
 import { HeroSection, InputCard, ResponseCard } from ".";
 
+// app/_locales/translations.ts
+export const t = {
+  en: {
+    title: "✨ Gemini 2.5 Flash Playground",
+    subtitle:
+      "Test the power of AI — generate text instantly for free before signing up. No account required.",
+    enterPrompt: "Enter your prompt",
+    placeholder: "Type your idea...",
+    generate: "Generate",
+    generating: "Generating...",
+    clear: "Clear",
+    aiResponse: "AI Response",
+    powered: "Powered by Gemini 2.5 Flash",
+    loading: "Generating response...",
+  },
+  id: {
+    title: "✨ Playground Gemini 2.5 Flash",
+    subtitle:
+      "Uji kekuatan AI — hasilkan teks instan gratis tanpa harus mendaftar.",
+    enterPrompt: "Masukkan prompt kamu",
+    placeholder: "Tulis idemu...",
+    generate: "Hasilkan",
+    generating: "Sedang diproses...",
+    clear: "Bersihkan",
+    aiResponse: "Respon AI",
+    powered: "Didukung oleh Gemini 2.5 Flash",
+    loading: "Sedang membuat respon...",
+  },
+} as const;
+
+export type Translations = typeof t;
+export type Language = keyof Translations; // "en" | "id"
+
 export default function GenAI() {
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState("");
-
-  const t = {
-    en: {
-      title: "✨ Gemini 2.5 Flash Playground",
-      subtitle:
-        "Test the power of AI — generate text instantly for free before signing up. No account required.",
-      enterPrompt: "Enter your prompt",
-      placeholder: "Type your idea...",
-      generate: "Generate",
-      generating: "Generating...",
-      clear: "Clear",
-      aiResponse: "AI Response",
-      powered: "Powered by Gemini 2.5 Flash",
-      loading: "Generating response...",
-    },
-    id: {
-      title: "✨ Playground Gemini 2.5 Flash",
-      subtitle:
-        "Uji kekuatan AI — hasilkan teks instan gratis tanpa harus mendaftar.",
-      enterPrompt: "Masukkan prompt kamu",
-      placeholder: "Tulis idemu...",
-      generate: "Hasilkan",
-      generating: "Sedang diproses...",
-      clear: "Bersihkan",
-      aiResponse: "Respon AI",
-      powered: "Didukung oleh Gemini 2.5 Flash",
-      loading: "Sedang membuat respon...",
-    },
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -1,11 +1,12 @@
 "use client";
 
+import { Translation } from "@/app/page";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Zap, Bot, BarChart } from "lucide-react";
 
 interface Props {
-  t: any;
+  t: Translation;
 }
 
 export default function Features({ t }: Props) {

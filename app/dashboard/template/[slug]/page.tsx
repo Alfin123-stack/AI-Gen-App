@@ -1,6 +1,5 @@
 import templates from "@/app/_utils/template";
 import FormTemplate from "./_components/FormTemplate";
-import { useLanguage } from "@/app/_contexts/LanguageContext";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -9,7 +8,6 @@ interface PageProps {
     slug: string;
   };
 }
-// ✅ Generate metadata per slug
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -54,7 +52,7 @@ export default function Page({ params }: PageProps) {
   const template = templates.find((t) => t.slug === params.slug);
 
     if (!template) {
-    return notFound(); // ✅ ini yang trigger 404 bawaan Next.js
+    return notFound();
   }
 
   return <FormTemplate template={template} />;

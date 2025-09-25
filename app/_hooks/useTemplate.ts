@@ -11,24 +11,30 @@ import { Editor } from "@toast-ui/react-editor";
 import { saveQuery } from "@/app/_services/mongoService";
 import { generateText } from "@/app/_services/aiService";
 import { useLanguage } from "../_contexts/LanguageContext";
+import {
+  Template,
+  TemplateInfo,
+} from "../dashboard/template/[slug]/_components/FormTemplate";
 
-export interface TemplateInfo {
-  name: string;
-  desc: string;
-  category: string;
+export type Language = "en" | "id";
+
+export interface MultiLangTemplate {
+  name: Record<Language, string>;
+  desc: Record<Language, string>;
+  category: Record<Language, string>;
   icon: string;
-  aiPrompt: string;
+  aiPrompt: Record<Language, string>;
   slug: string;
   form: {
-    label: string;
+    label: Record<Language, string>;
     field: string;
     name: string;
     required: boolean;
-    placeholder: string;
+    placeholder: Record<Language, string>;
   }[];
 }
 
-export function useTemplate(template: TemplateInfo) {
+export function useTemplate(template: Template & MultiLangTemplate) {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<string>("");
@@ -42,6 +48,7 @@ export function useTemplate(template: TemplateInfo) {
 
   const { language } = useLanguage();
 
+  // ✅ Tanpa cast "as Record" lagi
   const mappedTemplate: TemplateInfo = {
     name: template.name[language],
     desc: template.desc[language],
@@ -49,7 +56,7 @@ export function useTemplate(template: TemplateInfo) {
     icon: template.icon,
     aiPrompt: template.aiPrompt[language],
     slug: template.slug,
-    form: template.form.map((f: any) => ({
+    form: template.form.map((f): TemplateInfo["form"][0] => ({
       label: f.label[language],
       field: f.field,
       name: f.name,

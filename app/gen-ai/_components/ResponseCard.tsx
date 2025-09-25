@@ -3,11 +3,12 @@
 import ReactMarkdown from "react-markdown";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useLanguage } from "@/app/_contexts/LanguageContext";
+import { Translations } from "./GenAI";
 
 interface ResponseCardProps {
   response: string;
   isLoading: boolean;
-  t: any;
+  t: Translations;
 }
 
 export default function ResponseCard({ response, isLoading, t }: ResponseCardProps) {

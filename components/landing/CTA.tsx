@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { SignInButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Translation } from "@/app/page";
 
 interface Props {
-  t: any;
+  t: Translation;
 }
 
 export default function CTA({ t }: Props) {
