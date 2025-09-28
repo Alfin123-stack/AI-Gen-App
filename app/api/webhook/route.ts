@@ -14,8 +14,7 @@ export async function POST(req: Request) {
     // Verify the webhook signature and parse the event
     const event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
     if (event.type === "checkout.session.completed") {
-      const session = event.data.object; // Cast to `any` to access
-      console.log("WEBHOOK SESSION => ", session);
+      const session = event.data.object; 
       const transaction = new Transaction({
         sessionId: session.id,
         customerId: session.customer,

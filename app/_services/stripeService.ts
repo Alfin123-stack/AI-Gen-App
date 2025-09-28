@@ -57,7 +57,6 @@ export async function createCheckoutSession(): Promise<CheckoutSessionResponse> 
 
     return { url: session.url ?? undefined };
   } catch (error) {
-    console.log(error);
     console.error("Error creating Stripe Checkout session:", error);
     return { error: "Error creating Stripe Checkout session" };
   }
@@ -72,7 +71,6 @@ export async function checkUserSubscription() {
       customerEmail,
       status: "complete",
     });
-    console.log("Transaction found:", transaction);
     if (transaction && transaction.subscriptionId) {
       // Retrieve subscription details from Stripe
       const subscription = await stripe.subscriptions.retrieve(

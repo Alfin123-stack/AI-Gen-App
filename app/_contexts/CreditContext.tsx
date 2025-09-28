@@ -6,7 +6,6 @@ import {
   useState,
   useEffect,
   ReactNode,
-  useCallback,
 } from "react";
 import { updateCredit, getUserCredit } from "../_services/creditService";
 import { checkUserSubscription } from "../_services/stripeService";
@@ -43,36 +42,33 @@ export function CreditProvider({ children }: { children: ReactNode }) {
 
   const { user } = useUser();
   const emailUser = user?.emailAddresses.at(0)?.emailAddress;
-  console.log("User email in CreditProvider:", emailUser);
 
   // --- Ambil credit dari server ---
-  const getCredit = useCallback(
-    async (email: string) => {
-      try {
-        const data = await getUserCredit(email);
-        console.log("Fetched credit:", data);
-        if (data.ok) {
-          setCredit({
-            usedWords: data?.data?.usedWords ?? 0,
-            maxWords: subscribing ? Infinity : data?.data?.maxWords ?? 1000,
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching credit:", error);
+  const getCredit = async (email: string) => {
+    try {
+      const data = await getUserCredit(email);
+      if (data.ok) {
+        setCredit((prev) => ({
+          ...prev,
+          usedWords: data?.data?.usedWords ?? 0,
+          maxWords: subscribing ? Infinity : data?.data?.maxWords ?? 1000,
+        }));
       }
-    },
-    [subscribing]
-  );
+    } catch (error) {
+      console.error("Error fetching credit:", error);
+    }
+  };
 
   // --- Update credit ke server ---
   const addCredit = async (email: string, wordsUsed: number) => {
     try {
       const data = await updateCredit(email, wordsUsed);
       if (data.ok) {
-        setCredit({
+        setCredit((prev) => ({
+          ...prev,
           usedWords: data?.data?.usedWords ?? 0,
           maxWords: subscribing ? Infinity : data?.data?.maxWords ?? 1000,
-        });
+        }));
       }
     } catch (error) {
       console.error("Error updating credit:", error);
@@ -92,6 +88,8 @@ export function CreditProvider({ children }: { children: ReactNode }) {
 
   // --- Hybrid subscription: localStorage + server sync ---
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     // 1. Ambil dari localStorage dulu (instant render)
     const localSub = localStorage.getItem("subscribing");
     if (localSub !== null) {
@@ -102,7 +100,6 @@ export function CreditProvider({ children }: { children: ReactNode }) {
     async function fetchData() {
       try {
         const data = await checkUserSubscription();
-        console.log(data);
         const isSub = data?.ok || false;
         setSubscribing(isSub);
         localStorage.setItem("subscribing", String(isSub));
@@ -118,7 +115,7 @@ export function CreditProvider({ children }: { children: ReactNode }) {
     if (emailUser) {
       getCredit(emailUser);
     }
-  }, [emailUser, subscribing, getCredit]);
+  }, [emailUser, subscribing]);
 
   return (
     <CreditContext.Provider

@@ -64,8 +64,8 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <CreditProvider>
-        <LanguageProvider>
+      <LanguageProvider>
+        <CreditProvider>
           <html lang="en">
             <body className={`${poppins.variable} font-sans antialiased`}>
               <ThemeProvider
@@ -80,8 +80,8 @@ export default function RootLayout({
               </ThemeProvider>
             </body>
           </html>
-        </LanguageProvider>
-      </CreditProvider>
+        </CreditProvider>
+      </LanguageProvider>
     </ClerkProvider>
   );
 }

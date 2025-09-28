@@ -35,7 +35,6 @@ export interface Query {
 
 export function useHistory() {
   const [queries, setQueries] = useState<Query[]>([]);
-  console.log("Current queries state:", queries);
   const [pagination, setPagination] = useState<Pagination | null>(null);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -54,7 +53,6 @@ export function useHistory() {
       setLoading(true);
       try {
         const data = await getQueries(email || "", page, pageSize, keyword);
-        console.log("Fetched queries:", data);
         if (data.ok) {
           setQueries(data?.data ?? []);
           setPagination(data?.pagination ?? null);

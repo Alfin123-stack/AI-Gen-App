@@ -13,7 +13,6 @@ import { useCredit } from "@/app/_contexts/CreditContext";
 import SignUpModal from "../ui/SignUpModal";
 import { useLanguage } from "@/app/_contexts/LanguageContext";
 
-// 🔹 Dictionary untuk multi-bahasa
 const translations = {
   en: {
     menu: {
@@ -45,7 +44,7 @@ const translations = {
       manage: "Kelola Langganan",
     },
   },
-};
+} as const;
 
 export default function SideNav() {
   const pathname = usePathname();
@@ -53,26 +52,45 @@ export default function SideNav() {
   const { used, max, percent, isOverLimit, isUnlimited } = derived;
 
   const { language } = useLanguage();
-  const t = translations[language];
+  const t = translations[language] ?? translations.en; // fallback
 
   const menu = [
-    { name: t.menu.dashboard, icon: LayoutDashboard, path: "/dashboard" },
-    { name: t.menu.history, icon: FileClock, path: "/dashboard/history" },
-    { name: t.menu.billing, icon: WalletCards, path: "/dashboard/billing" },
-    { name: t.menu.settings, icon: Settings, path: "/dashboard/settings" },
+    {
+      key: "dashboard",
+      name: t.menu.dashboard,
+      icon: LayoutDashboard,
+      path: "/dashboard",
+    },
+    {
+      key: "history",
+      name: t.menu.history,
+      icon: FileClock,
+      path: "/dashboard/history",
+    },
+    {
+      key: "billing",
+      name: t.menu.billing,
+      icon: WalletCards,
+      path: "/dashboard/billing",
+    },
+    {
+      key: "settings",
+      name: t.menu.settings,
+      icon: Settings,
+      path: "/dashboard/settings",
+    },
   ];
 
   return (
     <div className="flex flex-col justify-between h-screen w-full pt-20 md:pt-4 pb-8 md:pb-0">
       {/* Top Menu */}
       <ul className="space-y-4">
-        {menu.map((item) => {
-          const isActive = pathname === item.path;
-
+        {menu.map(({ key, name, icon: Icon, path }) => {
+          const isActive = pathname === path;
           return (
-            <li key={item.path}>
+            <li key={key}>
               <Link
-                href={item.path}
+                href={path}
                 aria-current={isActive ? "page" : undefined}
                 className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all
                   ${
@@ -80,14 +98,14 @@ export default function SideNav() {
                       ? "bg-indigo-600 text-white shadow-md"
                       : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}>
-                <item.icon
+                <Icon
                   className={`w-5 h-5 shrink-0 transition-colors ${
                     isActive
                       ? "text-white"
                       : "text-gray-400 group-hover:text-indigo-500"
                   }`}
                 />
-                <span className="truncate">{item.name}</span>
+                <span className="truncate">{name}</span>
               </Link>
             </li>
           );
@@ -117,6 +135,7 @@ export default function SideNav() {
           <p className="text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">
             {t.plan.usage}
           </p>
+
           {isUnlimited ? (
             <p className="text-xs font-semibold text-green-600 dark:text-green-400 mb-3 flex items-center gap-1">
               <Rocket className="w-3 h-3" /> {t.plan.unlimited}
@@ -129,24 +148,24 @@ export default function SideNav() {
           )}
 
           {/* Progress bar */}
-          {isUnlimited ? (
-            <div className="w-full h-2 bg-green-100 dark:bg-green-900 rounded-full overflow-hidden">
+          <div className="w-full h-2 rounded-full overflow-hidden">
+            {isUnlimited ? (
               <div className="h-2 w-full bg-gradient-to-r from-green-400 to-green-500 animate-pulse" />
-            </div>
-          ) : (
-            <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  percent < 60
-                    ? "bg-gradient-to-r from-green-400 to-green-500"
-                    : percent < 90
-                    ? "bg-gradient-to-r from-yellow-400 to-yellow-500"
-                    : "bg-gradient-to-r from-red-500 to-pink-500"
-                }`}
-                style={{ width: `${percent}%` }}
-              />
-            </div>
-          )}
+            ) : (
+              <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                <div
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    percent < 60
+                      ? "bg-gradient-to-r from-green-400 to-green-500"
+                      : percent < 90
+                      ? "bg-gradient-to-r from-yellow-400 to-yellow-500"
+                      : "bg-gradient-to-r from-red-500 to-pink-500"
+                  }`}
+                  style={{ width: `${percent}%` }}
+                />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Action */}

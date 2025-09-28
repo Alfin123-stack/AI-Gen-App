@@ -1,7 +1,13 @@
-// app/_hooks/useTemplate.ts
 "use client";
 
-import { useState, useRef, useEffect, ChangeEvent, FormEvent } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  ChangeEvent,
+  FormEvent,
+  useMemo,
+} from "react";
 import { useTheme } from "next-themes";
 import { useUser } from "@clerk/nextjs";
 import { useCredit } from "@/app/_contexts/CreditContext";
@@ -14,54 +20,38 @@ import { useLanguage } from "../_contexts/LanguageContext";
 import { TemplateInfo } from "../dashboard/template/[slug]/_components/FormTemplate";
 import { Template } from "../_utils/template";
 
-export type Language = "en" | "id";
-
-export interface MultiLangTemplate {
-  name: Record<Language, string>;
-  desc: Record<Language, string>;
-  category: Record<Language, string>;
-  icon: string;
-  aiPrompt: Record<Language, string>;
-  slug: string;
-  form: {
-    label: Record<Language, string>;
-    field: string;
-    name: string;
-    required: boolean;
-    placeholder: Record<Language, string>;
-  }[];
-}
-
-export function useTemplate(template: Template) {
+export function useTemplate(template: Template | null) {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState<string>("");
+  const [response, setResponse] = useState("");
 
   const { user } = useUser();
-  const emailUser = user?.emailAddresses.at(0)?.emailAddress;
+  const emailUser = user?.emailAddresses.at(0)?.emailAddress ?? null;
   const { addCredit, derived, subscribing } = useCredit();
   const { theme } = useTheme();
+  const { language } = useLanguage();
 
   const editorRef = useRef<Editor>(null);
 
-  const { language } = useLanguage();
-
-  // ✅ Tanpa cast "as Record" lagi
-  const mappedTemplate: TemplateInfo = {
-    name: template.name[language],
-    desc: template.desc[language],
-    category: template.category[language],
-    icon: template.icon,
-    aiPrompt: template.aiPrompt[language],
-    slug: template.slug,
-    form: template.form.map((f): TemplateInfo["form"][0] => ({
-      label: f.label[language],
-      field: f.field,
-      name: f.name,
-      required: f.required,
-      placeholder: f.placeholder?.[language] ?? "",
-    })),
-  };
+  // ✅ gunakan useMemo agar konsisten, hindari rekalkulasi tiap render
+  const mappedTemplate: TemplateInfo | null = useMemo(() => {
+    if (!template) return null;
+    return {
+      name: template.name[language],
+      desc: template.desc[language],
+      category: template.category[language],
+      icon: template.icon,
+      aiPrompt: template.aiPrompt[language],
+      slug: template.slug,
+      form: template.form.map((f): TemplateInfo["form"][0] => ({
+        label: f.label[language],
+        field: f.field,
+        name: f.name,
+        required: f.required,
+        placeholder: f.placeholder?.[language] ?? "",
+      })),
+    };
+  }, [template, language]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -72,6 +62,7 @@ export function useTemplate(template: Template) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!mappedTemplate || !emailUser) return;
 
     if (!subscribing && derived.isOverLimit) {
       toast.error("You’ve reached your word limit. Please upgrade!");
@@ -79,14 +70,11 @@ export function useTemplate(template: Template) {
     }
 
     setLoading(true);
-
     try {
+      const promptInput = formData[mappedTemplate.form[0].name] || "";
       const data = await generateText({
-        prompt: `${mappedTemplate.aiPrompt} ${
-          formData[mappedTemplate.form[0].name]
-        } `,
+        prompt: `${mappedTemplate.aiPrompt} ${promptInput}`,
       });
-
       setResponse(data.text || "");
 
       if (data.text) {
@@ -98,12 +86,12 @@ export function useTemplate(template: Template) {
             desc: mappedTemplate.desc,
             icon: mappedTemplate.icon,
           },
-          email: emailUser!,
-          query: formData[mappedTemplate.form[0].name],
+          email: emailUser,
+          query: promptInput,
           content: data.text,
         });
 
-        await addCredit(emailUser!, wordsUsed);
+        await addCredit(emailUser, wordsUsed);
       }
     } catch (error) {
       console.error("Error generating text:", error);
@@ -113,9 +101,10 @@ export function useTemplate(template: Template) {
   };
 
   const handleCopy = () => {
-    if (editorRef.current) {
-      const editorInstance = editorRef.current.getInstance();
-      const markdown = editorInstance.getMarkdown();
+    if (!editorRef.current) return;
+    const editorInstance = editorRef.current.getInstance();
+    const markdown = editorInstance.getMarkdown();
+    if (typeof navigator !== "undefined") {
       navigator.clipboard.writeText(markdown);
       toast.success("Copied to clipboard!");
     }

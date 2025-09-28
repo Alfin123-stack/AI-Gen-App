@@ -1,15 +1,24 @@
 import Query from "@/app/_models/query";
 import db from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
+import mongoose from "mongoose";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+  context: { params: Promise<{ id: string }> } // 👈 sesuai error
+): Promise<Response> {
   try {
     await db();
 
-    const { id } = await params; // ✅ karena params dianggap Promise
+    const { id } = await context.params; // 👈 karena Promise, perlu await
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return NextResponse.json(
+        { ok: false, message: "Invalid ID" },
+        { status: 400 }
+      );
+    }
+
     const query = await Query.findById(id);
 
     if (!query) {
@@ -19,10 +28,10 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({
-      ok: true,
-      data: JSON.parse(JSON.stringify(query)),
-    });
+    return NextResponse.json(
+      { ok: true, data: JSON.parse(JSON.stringify(query)) },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error fetching query:", error);
     return NextResponse.json(

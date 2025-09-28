@@ -23,17 +23,18 @@ export default function TemplateNotFound() {
 
       {/* Actions */}
       <div className="mt-8 flex flex-col sm:flex-row gap-3">
-        <Link
-          href="/dashboard"
-          className="px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-medium shadow hover:bg-indigo-700 transition-colors">
-          Browse Templates
+        <Link href="/dashboard/templates" passHref>
+          <a className="px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-medium shadow hover:bg-indigo-700 transition-colors">
+            Browse Templates
+          </a>
         </Link>
-        <Link
-          href="/dashboard"
-          className="px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 
-                     text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-100 
-                     dark:hover:bg-gray-800 transition-colors">
-          Back to Dashboard
+        <Link href="/dashboard" passHref>
+          <a
+            className="px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 
+                       text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-100 
+                       dark:hover:bg-gray-800 transition-colors">
+            Back to Dashboard
+          </a>
         </Link>
       </div>
     </div>

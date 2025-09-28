@@ -6,7 +6,7 @@ import { Loader2Icon } from "lucide-react";
 import { TemplateInfo } from "./FormTemplate";
 
 interface FormFieldsProps {
-  template: TemplateInfo;
+  template: TemplateInfo | null;
   formData: Record<string, string>;
   loading: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -29,8 +29,8 @@ export default function FormFields({
       {/* Icon */}
       <div className="p-5 rounded-2xl bg-indigo-100 dark:bg-indigo-900/40 mb-4">
         <Image
-          src={template.icon}
-          alt={template.name}
+          src={template?.icon || ""}
+          alt={template?.name || ""}
           width={64}
           height={64}
           className="object-contain"
@@ -39,15 +39,15 @@ export default function FormFields({
 
       {/* Title + Description */}
       <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-        {template.name}
+        {template?.name}
       </h1>
       <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 mb-6 max-w-sm">
-        {template.desc}
+        {template?.desc}
       </p>
 
       {/* Fields */}
       <div className="w-full space-y-5">
-        {template.form.map((field, idx) => (
+        {template?.form.map((field, idx) => (
           <div key={idx} className="flex flex-col text-left">
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {field.label}

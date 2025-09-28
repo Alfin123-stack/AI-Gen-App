@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
-import UserCredit from "@/app/_models/userCredit"; // nanti kita bikin modelnya
+import UserCredit from "@/app/_models/userCredit";
 
-// GET -> cek sisa kredit user
 export async function GET(req: Request) {
   try {
     await db();
