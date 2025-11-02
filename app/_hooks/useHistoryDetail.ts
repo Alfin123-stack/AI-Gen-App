@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { getQueryById, Query } from "@/app/_services/mongoService";
+import { getQueryById } from "@/app/_services/mongoService";
 import { useLanguage } from "../_contexts/LanguageContext";
+import { Query } from "@/lib/types";
 
 const translations = {
   en: {

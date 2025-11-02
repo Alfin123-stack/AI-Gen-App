@@ -6,41 +6,64 @@ const translations = {
   en: {
     title: "Billing",
     subtitle: "Manage your subscription, payment methods, and invoices",
+
     freePlan: "Free Plan",
     proPlan: "Pro Plan",
     freeDesc: "Basic features for individuals getting started.",
     proDesc: "Advanced features for power users.",
+
     freeCurrent: "You are currently on the Free plan.",
     proCurrent: "You are currently subscribed to the Pro plan.",
+
     manage: "Manage Subscription",
     upgrade: "Upgrade to Pro",
     currentPlan: "Current Plan",
     notActive: "Not Active",
-    freeFeatures: ["5 queries / month", "Community support"],
+
+    freeFeatures: [
+      { text: "5 queries / month", included: true },
+      { text: "Community support", included: true },
+      { text: "No priority access", included: false },
+      { text: "Limited template access", included: false },
+    ],
+
     proFeatures: [
-      "Unlimited queries",
-      "Priority support",
-      "Access to new templates",
+      { text: "Unlimited queries", included: true },
+      { text: "Priority support", included: true },
+      { text: "Access to new templates", included: true },
+      { text: "Faster processing speed", included: true },
     ],
   },
+
   id: {
     title: "Tagihan",
     subtitle: "Kelola langganan Anda, metode pembayaran, dan faktur",
+
     freePlan: "Paket Gratis",
     proPlan: "Paket Pro",
     freeDesc: "Fitur dasar untuk pemula.",
     proDesc: "Fitur lanjutan untuk pengguna tingkat lanjut.",
+
     freeCurrent: "Anda sedang menggunakan Paket Gratis.",
     proCurrent: "Anda berlangganan Paket Pro.",
+
     manage: "Kelola Langganan",
     upgrade: "Upgrade ke Pro",
     currentPlan: "Paket Saat Ini",
     notActive: "Tidak Aktif",
-    freeFeatures: ["5 kueri / bulan", "Dukungan komunitas"],
+
+    freeFeatures: [
+      { text: "5 kueri / bulan", included: true },
+      { text: "Dukungan komunitas", included: true },
+      { text: "Tanpa akses prioritas", included: false },
+      { text: "Akses template terbatas", included: false },
+    ],
+
     proFeatures: [
-      "Kueri tanpa batas",
-      "Dukungan prioritas",
-      "Akses ke template baru",
+      { text: "Kueri tanpa batas", included: true },
+      { text: "Dukungan prioritas", included: true },
+      { text: "Akses ke template baru", included: true },
+      { text: "Kecepatan pemrosesan lebih cepat", included: true },
     ],
   },
 };

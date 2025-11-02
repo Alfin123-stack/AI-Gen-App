@@ -1,7 +1,7 @@
 import templates from "@/app/_utils/template";
-import FormTemplate from "./_components/FormTemplate";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import FormTemplate from "./_components/form/FormTemplate";
 
 interface PageProps {
   params: {
@@ -51,7 +51,7 @@ export async function generateMetadata({
 export default function Page({ params }: PageProps) {
   const template = templates.find((t) => t.slug === params.slug);
 
-    if (!template) {
+  if (!template) {
     return notFound();
   }
 

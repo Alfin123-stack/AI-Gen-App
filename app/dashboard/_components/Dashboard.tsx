@@ -2,7 +2,7 @@
 "use client";
 
 import { Suspense } from "react";
-import PageContent from "./PageContent"; // tetap pakai file yang sudah ada
+import PageContent from "./DashboardPageContent"; // tetap pakai file yang sudah ada
 
 export default function Dashboard() {
   return (

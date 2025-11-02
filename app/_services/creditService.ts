@@ -1,11 +1,5 @@
-export interface CreditResponse {
-  ok: boolean;
-  data?: {
-    usedWords: number;
-    maxWords: number;
-  };
-  message?: string;
-}
+import { CreditResponse } from "@/lib/types";
+
 
 // 🔹 Ambil data kredit
 export async function getUserCredit(email: string): Promise<CreditResponse> {

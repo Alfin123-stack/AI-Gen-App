@@ -1,13 +1,11 @@
 // app/dashboard/history/HistoryClient.tsx
 "use client";
 
-import { Suspense } from "react";
-import { Loader2 } from "lucide-react";
-import QueryList from "./QueryList";
-import Pagination from "./Pagination";
+import QueryList from "./query/HistoryQueryList";
 import SearchBox from "@/components/ui/SearchBox";
 import { useHistory } from "@/app/_hooks/useHistory";
 import { useLanguage } from "@/app/_contexts/LanguageContext";
+import HistoryPagination from "./pagination/HistoryPagination";
 
 export default function History() {
   const {
@@ -32,17 +30,10 @@ export default function History() {
         placeholder={t.searchPlaceholder}
       />
 
-      <Suspense
-        fallback={
-          <div className="flex justify-center items-center py-20">
-            <Loader2 className="animate-spin w-8 h-8 text-muted-foreground" />
-          </div>
-        }>
-        <QueryList queries={queries} loading={loading} />
-      </Suspense>
+      <QueryList queries={queries} loading={loading} />
 
       {pagination && pagination.totalPages > 1 && !loading && (
-        <Pagination
+        <HistoryPagination
           page={pagination.page}
           totalPages={pagination.totalPages}
           pageSize={pagination.pageSize}

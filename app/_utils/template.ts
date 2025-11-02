@@ -1,23 +1,5 @@
-// templates.ts
-import { Language } from "@/app/_contexts/LanguageContext";
+import { Template } from "@/lib/types";
 
-export interface FormField {
-  label: Record<Language, string>;
-  field: "input" | "textarea";
-  name: string;
-  required: boolean;
-  placeholder?: Record<Language, string>;
-}
-
-export interface Template {
-  name: Record<Language, string>;
-  desc: Record<Language, string>;
-  category: Record<Language, string>;
-  icon: string;
-  slug: string;
-  aiPrompt: Record<Language, string>;
-  form: FormField[];
-}
 
 const templates: Template[] = [
   {
@@ -678,37 +660,5 @@ const templates: Template[] = [
   },
 ];
 
-// Helper function to get template text in the current language
-export const getTemplateText = (
-  template: Template,
-  language: Language,
-  field: keyof Template
-): string => {
-  if (
-    field === "name" ||
-    field === "desc" ||
-    field === "category" ||
-    field === "aiPrompt"
-  ) {
-    return (template[field] as Record<Language, string>)[language];
-  }
-  return "";
-};
-
-// Helper function to get form field label in the current language
-export const getFormFieldLabel = (
-  field: FormField,
-  language: Language
-): string => {
-  return field.label[language as keyof typeof field.label];
-};
-
-// Helper function to get form field placeholder in the current language
-export const getFormFieldPlaceholder = (
-  field: FormField,
-  language: Language
-): string => {
-  return field.placeholder?.[language as keyof typeof field.placeholder] || "";
-};
 
 export default templates;

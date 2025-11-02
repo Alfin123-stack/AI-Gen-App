@@ -17,8 +17,8 @@ import { Editor } from "@toast-ui/react-editor";
 import { saveQuery } from "@/app/_services/mongoService";
 import { generateText } from "@/app/_services/aiService";
 import { useLanguage } from "../_contexts/LanguageContext";
-import { TemplateInfo } from "../dashboard/template/[slug]/_components/FormTemplate";
-import { Template } from "../_utils/template";
+
+import { Template, TemplateInfo } from "@/lib/types";
 
 export function useTemplate(template: Template | null) {
   const [formData, setFormData] = useState<Record<string, string>>({});
@@ -33,7 +33,6 @@ export function useTemplate(template: Template | null) {
 
   const editorRef = useRef<Editor>(null);
 
-  // ✅ gunakan useMemo agar konsisten, hindari rekalkulasi tiap render
   const mappedTemplate: TemplateInfo | null = useMemo(() => {
     if (!template) return null;
     return {
@@ -81,11 +80,7 @@ export function useTemplate(template: Template | null) {
         const wordsUsed = data.text.trim().split(/\s+/).length;
 
         await saveQuery({
-          template: {
-            name: mappedTemplate.name,
-            desc: mappedTemplate.desc,
-            icon: mappedTemplate.icon,
-          },
+          template: mappedTemplate,
           email: emailUser,
           query: promptInput,
           content: data.text,

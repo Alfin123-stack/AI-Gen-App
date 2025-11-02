@@ -4,11 +4,9 @@ import db from "@/lib/db";
 import { currentUser } from "@clerk/nextjs/server";
 import Transaction from "../_models/transaction";
 import stripe from "@/lib/stripe";
+import { CheckoutSessionResponse } from "@/lib/types";
 
-interface CheckoutSessionResponse {
-  url?: string;
-  error?: string;
-}
+
 
 export async function createCheckoutSession(): Promise<CheckoutSessionResponse> {
   const user = await currentUser();

@@ -21,6 +21,5 @@ export const metadata: Metadata = {
 };
 
 export default function BillingPage() {
-  // ini tetap server
   return <Billing />;
 }

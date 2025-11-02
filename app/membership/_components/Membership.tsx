@@ -2,10 +2,9 @@
 
 import { Crown, XCircle } from "lucide-react";
 import { Toaster } from "react-hot-toast";
-import PlanCard from "./PlanCard";
+import PlanCard from "@/components/plan-card/PlanCard"; // 👉 pakai versi kamu yang super lengkap
 import { useLanguage } from "@/app/_contexts/LanguageContext";
 
-// 🔹 Dictionary multi-bahasa
 const translations = {
   en: {
     headerTitle: "Choose Your Membership",
@@ -80,10 +79,10 @@ export default function Membership() {
           title={t.freeTitle}
           description={t.freeDesc}
           icon={<XCircle className="w-8 h-8 text-muted-foreground" />}
-          highlighted={false}
           features={t.freeFeatures}
+          isActive={true}
+          disable
           text={t.freeBtn}
-          disable={true}
         />
 
         {/* Monthly Plan */}
@@ -91,8 +90,9 @@ export default function Membership() {
           title={t.monthlyTitle}
           description={t.monthlyDesc}
           icon={<Crown className="w-8 h-8 text-yellow-500" />}
-          highlighted
           features={t.monthlyFeatures}
+          isPro
+          highlighted
           text={t.monthlyBtn}
         />
       </div>

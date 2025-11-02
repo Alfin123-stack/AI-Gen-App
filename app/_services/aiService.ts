@@ -1,10 +1,5 @@
-export interface GeneratePayload {
-  prompt: string;
-}
+import { GeneratePayload, GenerateResponse } from "@/lib/types";
 
-export interface GenerateResponse {
-  text: string;
-}
 
 export async function generateText(payload: GeneratePayload): Promise<GenerateResponse> {
   const res = await fetch("/api/generate", {

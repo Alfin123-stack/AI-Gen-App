@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import GenAI from "./_components/GenAI";
+import TryAI from "./_components/TryAI";
 
 // ✅ Metadata untuk SEO & share
 export const metadata: Metadata = {
@@ -39,5 +39,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <GenAI />;
+  return <TryAI />;
 }

@@ -1,14 +1,16 @@
 "use client";
-import { Header, CurrentPlan, PlanCard } from ".";
 import { useBilling } from "@/app/_hooks/useBilling";
+import PlanCard from "@/components/plan-card/PlanCard";
+import BillingHeader from "./BillingHeader";
+import BillingCurrentPlan from "./BillingCurrentPlan";
 
 export default function Billing() {
   const { subscribing, t, handlePortalClick } = useBilling();
 
   return (
     <div className="w-full max-w-7xl mx-auto space-y-8">
-      <Header t={t} />
-      <CurrentPlan
+      <BillingHeader t={t} />
+      <BillingCurrentPlan
         subscribing={subscribing}
         t={t}
         onManage={handlePortalClick}
@@ -17,14 +19,14 @@ export default function Billing() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <PlanCard
           title={t.freePlan}
-          desc={t.freeDesc}
+          description={t.freeDesc}
           features={t.freeFeatures}
           isActive={!subscribing}
           t={t}
         />
         <PlanCard
           title={t.proPlan}
-          desc={t.proDesc}
+          description={t.proDesc}
           features={t.proFeatures}
           isActive={subscribing}
           isPro

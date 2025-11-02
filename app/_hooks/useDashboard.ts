@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import templates from "@/app/_utils/template";
 import { useLanguage } from "@/app/_contexts/LanguageContext";
-import { getTemplateText } from "@/app/_utils/template";
+import { getTemplateText } from "@/lib/utils";
 
 const translations = {
   en: {
@@ -70,6 +70,6 @@ export function useDashboard() {
     handleChange,
     filteredTemplates,
     language,
-    translations
+    translations,
   };
 }
